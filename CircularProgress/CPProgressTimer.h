@@ -18,8 +18,8 @@ typedef CGFloat (^CPProgressBlock)();
 
 @property(nonatomic) CGFloat frameWidth;
 @property(nonatomic, strong) UIColor *progressColor;
-@property(nonatomic, strong) UIColor *progressBackgroundColor;
-@property(nonatomic, strong) UIColor *circleBackgroundColor;
+@property(nonatomic, strong) UIColor *progressBorderColor;
+@property(nonatomic, strong) UIColor *progrtssCircleColor;
 
 - (void)startWithBlock:(CPProgressBlock)block withTimeInterval:(int)timedDuration;
 - (void)stop;

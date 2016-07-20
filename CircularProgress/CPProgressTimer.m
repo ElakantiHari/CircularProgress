@@ -7,7 +7,7 @@
 //
 
 #import "CPProgressTimer.h"
-//#import "NSTimer+Extension.h"
+#import "NSTimer+Extension.h"
 
 #define UIColorMake(r, g, b, a) [UIColor colorWithRed:r / 255. green:g / 255. blue:b / 255. alpha:a]
 
@@ -37,6 +37,10 @@
 - (id)initWithCoder:(NSCoder *)coder {
     self = [super initWithCoder:coder];
     if (self) {
+        self.progressColor = [UIColor redColor];
+        self.progressBorderColor = [UIColor yellowColor];
+        self.progrtssCircleColor = [UIColor blueColor];
+
         [self setupParams];
     }
     return self;
@@ -48,9 +52,9 @@
     
     self.frameWidth = 10;
     
-    self.progressColor = [UIColor colorWithWhite:1.0 alpha:0.4];
-    self.progressBackgroundColor = [UIColor clearColor];
-    self.circleBackgroundColor = [UIColor clearColor];
+//    self.progressColor = [UIColor colorWithWhite:1.0 alpha:0.4];
+//    self.progressBackgroundColor = [UIColor yellowColor];
+//    self.circleBackgroundColor = [UIColor blueColor];
     
     self.progress = 0;
     
@@ -154,9 +158,9 @@
 
 #pragma mark draw progress
 - (void)drawRect:(CGRect)rect {
-    [self drawFramePie:self.bounds color:[UIColor colorWithWhite:1.0 alpha:0.5]];
     [self drawFillPie:rect margin:self.frameWidth color:self.progressColor percentage:self.progress];
-    [self drawFillProgress:rect margin:self.frameWidth color:[UIColor whiteColor] percentage:self.progress];
+    [self drawFillProgress:rect margin:self.frameWidth color:self.progressBorderColor percentage:self.progress];
+    [self drawFramePie:self.bounds color:self.progrtssCircleColor];
 }
 
 - (void)drawFillPie:(CGRect)rect margin:(CGFloat)margin color:(UIColor *)color percentage:(CGFloat)percentage {
@@ -187,9 +191,9 @@
     CGContextStrokePath(context);
 }
 
+/*! IT IS FOR CENTER CIRCLE */
 - (void)drawFramePie:(CGRect)rect color:(UIColor *)color{
-    
-    //    CGFloat radius = MIN(CGRectGetHeight(rect), CGRectGetWidth(rect)) * 0.5-(rect.size.width/1.2);
+//    CGFloat radius = MIN(CGRectGetHeight(rect), CGRectGetWidth(rect)) * 0.5-(rect.size.width/1.2);
     CGFloat radius = self.bounds.size.height/4;
     CGFloat centerX = CGRectGetWidth(rect) * 0.5;
     CGFloat centerY = CGRectGetHeight(rect) * 0.5;

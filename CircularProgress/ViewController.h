@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CPProgressTimer.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController<CPProgressTimerDelegate>
+@property (weak, nonatomic) IBOutlet CPProgressTimer *hTimer;
 
 
 @end
