@@ -2,15 +2,12 @@
 //  HKProgressTimer.m
 //  CircularProgress
 //
-//  Created by Hari Krishna  on 20/07/16.
-//  Copyright © 2016 VrindaTechApps. All rights reserved.
+//  Created by HariKrishna  on 20/07/16.
+//  Copyright © 2016 Apptitude. All rights reserved.
 //
 
 #import "HKProgressTimer.h"
 #import "NSTimer+Extension.h"
-
-#define UIColorMake(r, g, b, a) [UIColor colorWithRed:r / 255. green:g / 255. blue:b / 255. alpha:a]
-
 
 @interface HKProgressTimer ()
 

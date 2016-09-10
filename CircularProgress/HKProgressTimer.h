@@ -2,8 +2,8 @@
 //  HKProgressTimer.h
 //  CircularProgress
 //
-//  Created by Hari Krishna  on 20/07/16.
-//  Copyright © 2016 VrindaTechApps. All rights reserved.
+//  Created by HariKrishna  on 20/07/16.
+//  Copyright © 2016 Apptitude. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -15,7 +15,6 @@ typedef CGFloat (^HKProgressBlock)();
 @interface HKProgressTimer : UIView
 
 @property(nonatomic, weak) id <HKProgressTimerDelegate> delegate;
-
 
 typedef NS_ENUM(NSInteger, ProgressDirection) {
     ProgressDirectionFillClockwise,
@@ -36,10 +35,6 @@ typedef NS_ENUM(NSInteger, ProgressDirection) {
 - (void)pause;
 - (void)invalidateBackgroundTimer;
 - (void)setTimeLabelWithDuration:(int)lTimeDuration;
-
-
-- (void)setProgressDirection:(ProgressDirection)progressDirection;
-
 
 @end
 

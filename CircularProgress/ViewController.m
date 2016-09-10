@@ -2,8 +2,8 @@
 //  ViewController.m
 //  CircularProgress
 //
-//  Created by Hari Krishna  on 20/07/16.
-//  Copyright © 2016 VrindaTechApps. All rights reserved.
+//  Created by HariKrishna  on 20/07/16.
+//  Copyright © 2016 Apptitude. All rights reserved.
 //
 
 #import "ViewController.h"
@@ -52,11 +52,12 @@
     
     
 }
+
 - (IBAction)pauseAction:(id)sender {
 }
 
-
 #pragma mark - CPProgreddTimer Delegates
+
 - (void)didStopProgressTimer:(HKProgressTimer *)progressTimer percentage:(CGFloat)percentage {
 //    NSLog(@"didStopProgressTimer - Percentage = %f",percentage);
 }
