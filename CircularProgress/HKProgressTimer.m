@@ -1,30 +1,30 @@
 //
-//  CPProgressTimer.m
+//  HKProgressTimer.m
 //  CircularProgress
 //
 //  Created by Hari Krishna  on 20/07/16.
 //  Copyright © 2016 VrindaTechApps. All rights reserved.
 //
 
-#import "CPProgressTimer.h"
+#import "HKProgressTimer.h"
 #import "NSTimer+Extension.h"
 
 #define UIColorMake(r, g, b, a) [UIColor colorWithRed:r / 255. green:g / 255. blue:b / 255. alpha:a]
 
 
-@interface CPProgressTimer ()
+@interface HKProgressTimer ()
 
 @property(nonatomic) CGFloat progress;
 @property(nonatomic) CGFloat floatSecond;
 @property(nonatomic) int timeDuration;
 @property(nonatomic) int ticks;
 @property(nonatomic, strong) NSTimer *timer;
-@property(nonatomic, copy) CPProgressBlock block;
+@property(nonatomic, copy) HKProgressBlock block;
 @property(nonatomic, strong) UILabel *timerLabel;
 
 @end
 
-@implementation CPProgressTimer
+@implementation HKProgressTimer
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -37,38 +37,56 @@
 - (id)initWithCoder:(NSCoder *)coder {
     self = [super initWithCoder:coder];
     if (self) {
-        self.progressColor = [UIColor redColor];
-        self.progressBorderColor = [UIColor yellowColor];
-        self.progrtssCircleColor = [UIColor blueColor];
-
         [self setupParams];
+
+        self.progressColor = [UIColor whiteColor];
+        self.progressBorderColor = [UIColor redColor];
+        self.progressCircleColor = [UIColor blueColor];
+        self.progressDirection = ProgressDirectionFillClockwise;
+        
     }
     return self;
 }
 
+#pragma mark - progress SetUp
+
+// Setters
+- (void)setProgressColor:(UIColor *)progressColor {
+    _progressColor = progressColor;
+}
+
+- (void)setProgressBorderColor:(UIColor *)progressBorderColor {
+    _progressBorderColor = progressBorderColor;
+}
+
+- (void)setProgressCircleColor:(UIColor *)progressCircleColor {
+    _progressCircleColor =  progressCircleColor;
+}
+
+- (void)setProgressDirection:(ProgressDirection)progressDirection {
+    _progressDirection = progressDirection;
+}
+
 - (void)setupParams {
-    
     self.backgroundColor = [UIColor clearColor];
-    
-    self.frameWidth = 10;
-    
-//    self.progressColor = [UIColor colorWithWhite:1.0 alpha:0.4];
-//    self.progressBackgroundColor = [UIColor yellowColor];
-//    self.circleBackgroundColor = [UIColor blueColor];
-    
-    self.progress = 0;
     
     self.timerLabel = [[UILabel alloc] initWithFrame:self.bounds];
     self.timerLabel.textAlignment = NSTextAlignmentCenter;
     self.timerLabel.font = [UIFont boldSystemFontOfSize:25.0f];
+    self.timerLabel.textColor = [UIColor whiteColor];
     [self addSubview:self.timerLabel];
     
+    self.frameWidth = 10;
+    self.progress = 0;
     self.timerLabel.text = @"00:00";
+    
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"PRACTICE_TIME"]) {
         int timeduration = [[[NSUserDefaults standardUserDefaults] objectForKey:@"PRACTICE_TIME"] intValue];
         [self setTimeLabelWithDuration:timeduration];
     }
 }
+
+#pragma mark - progress DataSource
 
 - (void)setTimeLabelWithDuration:(int)lTimeDuration {
     int seconds = lTimeDuration % 60;
@@ -81,8 +99,7 @@
     }
 }
 
-
-- (void)startWithBlock:(CPProgressBlock)block withTimeInterval:(int)timedDuration{
+- (void)startWithBlock:(HKProgressBlock)block withTimeInterval:(int)timedDuration{
     NSAssert(block, @"Can't start progress without progressBlock");
     self.floatSecond = 1.0;
     self.timeDuration = timedDuration;
@@ -103,9 +120,11 @@
     }
 }
 
-- (void)invalidateBackgroundTimer {
+#pragma mark - progress Delegate
+
+- (void)pause {
     if (self.timer.isValid) {
-        [self.timer invalidate];
+        [self.timer pauseTimer];
     }
 }
 
@@ -115,9 +134,23 @@
     }
 }
 
-- (void)pause {
+- (void)stop {
+    [self.timer invalidate];
+    if ([self.delegate respondsToSelector:@selector(didStopProgressTimer:percentage:)]) {
+        [self.delegate didStopProgressTimer:self percentage:self.progress];
+    }
+    self.progress = 0;
+    self.timerLabel.text = @"00:00";
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"PRACTICE_TIME"]) {
+        int timeduration = [[[NSUserDefaults standardUserDefaults] objectForKey:@"PRACTICE_TIME"] intValue];
+        [self setTimeLabelWithDuration:timeduration];
+    }
+    [self setNeedsDisplay];
+}
+
+- (void)invalidateBackgroundTimer {
     if (self.timer.isValid) {
-        [self.timer pauseTimer];
+        [self.timer invalidate];
     }
 }
 
@@ -142,25 +175,12 @@
     }
 }
 
-- (void)stop {
-    [self.timer invalidate];
-    if ([self.delegate respondsToSelector:@selector(didStopProgressTimer:percentage:)]) {
-        [self.delegate didStopProgressTimer:self percentage:self.progress];
-    }
-    self.progress = 0;
-    self.timerLabel.text = @"00:00";
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"PRACTICE_TIME"]) {
-        int timeduration = [[[NSUserDefaults standardUserDefaults] objectForKey:@"PRACTICE_TIME"] intValue];
-        [self setTimeLabelWithDuration:timeduration];
-    }
-    [self setNeedsDisplay];
-}
+#pragma mark - Draw progress
 
-#pragma mark draw progress
 - (void)drawRect:(CGRect)rect {
-    [self drawFillPie:rect margin:self.frameWidth color:self.progressColor percentage:self.progress];
-    [self drawFillProgress:rect margin:self.frameWidth color:self.progressBorderColor percentage:self.progress];
-    [self drawFramePie:self.bounds color:self.progrtssCircleColor];
+    [self drawFillPie:rect margin:self.frameWidth color:_progressColor percentage:self.progress];
+    [self drawFillProgress:rect margin:self.frameWidth color:_progressBorderColor percentage:self.progress];
+    [self drawFramePie:self.bounds color:_progressCircleColor];
 }
 
 - (void)drawFillPie:(CGRect)rect margin:(CGFloat)margin color:(UIColor *)color percentage:(CGFloat)percentage {
@@ -171,21 +191,24 @@
     CGContextRef cgContext = UIGraphicsGetCurrentContext();
     CGContextSetFillColorWithColor(cgContext, [color CGColor]);
     CGContextMoveToPoint(cgContext, centerX, centerY);
-    
-    // fill clock wise
-//    CGContextAddArc(cgContext, centerX, centerY, radius, (CGFloat) -M_PI_2, (CGFloat) (-M_PI_2 + M_PI * 2 * (percentage)), 0);
-    
-    // unfill clockwise
-//    CGContextAddArc(cgContext, centerX, centerY, radius, (CGFloat) (-M_PI_2 + M_PI * 2 * (percentage)), (CGFloat) (-M_PI_2 + M_PI * 2 * (1)), 0);
-    
-    //unfill anticlockwise
-//    CGContextAddArc(cgContext, centerX, centerY, radius, (CGFloat) -M_PI_2, (CGFloat) (-M_PI_2 + M_PI * (-2) * (percentage)), 0);
 
+    switch (self.progressDirection) {
+        case ProgressDirectionFillClockwise:    // fill clock wise
+            CGContextAddArc(cgContext, centerX, centerY, radius, (CGFloat) -M_PI_2, (CGFloat) (-M_PI_2 + M_PI * 2 * (percentage)), 0);
+            break;
+        case ProgressDirectionUnFillClockwise:  // unfill clockwise
+            CGContextAddArc(cgContext, centerX, centerY, radius, (CGFloat) (-M_PI_2 + M_PI * 2 * (percentage)), (CGFloat) (-M_PI_2 + M_PI * 2 * (1)), 0);
+            break;
+        case ProgressDirectionFillAntiClockwise:    //fill anticlockwise
+            CGContextAddArc(cgContext, centerX, centerY, radius, (CGFloat) (-M_PI_2 + M_PI * (-2) * (percentage)), (CGFloat) (-M_PI_2 + M_PI * (-2) * (1)), 0);
+            break;
+        case ProgressDirectionUnFillAntiClockwise:  //unfill anticlockwise
+            CGContextAddArc(cgContext, centerX, centerY, radius, (CGFloat) -M_PI_2, (CGFloat) (-M_PI_2 + M_PI * (-2) * (percentage)), 0);
+            break;
+        default:
+            break;
+    }
 
-    //fill anticlockwise
-    CGContextAddArc(cgContext, centerX, centerY, radius, (CGFloat) (-M_PI_2 + M_PI * (-2) * (percentage)), (CGFloat) (-M_PI_2 + M_PI * (-2) * (1)), 0);
-
-    
     CGContextClosePath(cgContext);
     CGContextFillPath(cgContext);
 }
@@ -196,27 +219,28 @@
     CGFloat centerX = CGRectGetWidth(rect) * 0.5;
     CGFloat centerY = CGRectGetHeight(rect) * 0.5;
     
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetLineWidth(context, 10);
-    CGContextSetStrokeColorWithColor(context, [color CGColor]);
-
-    // fill clockwise
-//    CGContextAddArc(context, centerX, centerY, radius, (CGFloat) -M_PI_2, (CGFloat) (-M_PI_2 + M_PI * 2 * (percentage)), 0);
+    CGContextRef cgContext = UIGraphicsGetCurrentContext();
+    CGContextSetLineWidth(cgContext, 10);
+    CGContextSetStrokeColorWithColor(cgContext, [color CGColor]);
     
-    // unfill clockwise
-//    CGContextAddArc(context, centerX, centerY, radius, (CGFloat) (-M_PI_2 + M_PI * 2 * (percentage)), (CGFloat) (-M_PI_2 + M_PI * 2 * (1)), 0);
+    switch (self.progressDirection) {
+        case ProgressDirectionFillClockwise:    // fill clock wise
+            CGContextAddArc(cgContext, centerX, centerY, radius, (CGFloat) -M_PI_2, (CGFloat) (-M_PI_2 + M_PI * 2 * (percentage)), 0);
+            break;
+        case ProgressDirectionUnFillClockwise:  // unfill clockwise
+            CGContextAddArc(cgContext, centerX, centerY, radius, (CGFloat) (-M_PI_2 + M_PI * 2 * (percentage)), (CGFloat) (-M_PI_2 + M_PI * 2 * (1)), 0);
+            break;
+        case ProgressDirectionFillAntiClockwise:    //fill anticlockwise
+            CGContextAddArc(cgContext, centerX, centerY, radius, (CGFloat) (-M_PI_2 + M_PI * (-2) * (percentage)), (CGFloat) (-M_PI_2 + M_PI * (-2) * (1)), 0);
+            break;
+        case ProgressDirectionUnFillAntiClockwise:  //unfill anticlockwise
+            CGContextAddArc(cgContext, centerX, centerY, radius, (CGFloat) -M_PI_2, (CGFloat) (-M_PI_2 + M_PI * (-2) * (percentage)), 0);
+            break;
+        default:
+            break;
+    }
     
-    
-    //unfill anticlockwise
-//    CGContextAddArc(context, centerX, centerY, radius, (CGFloat) -M_PI_2, (CGFloat) (-M_PI_2 + M_PI * (-2) * (percentage)), 0);
-
-    
-    CGContextAddArc(context, centerX, centerY, radius, (CGFloat) (-M_PI_2 + M_PI * (-2) * (percentage)), (CGFloat) (-M_PI_2 + M_PI * (-2) * (1)), 0);
-
-    
-
-    
-    CGContextStrokePath(context);
+    CGContextStrokePath(cgContext);
 }
 
 /*! IT IS FOR CENTER CIRCLE */
@@ -230,6 +254,7 @@
     
     CGContextRef cgContext = UIGraphicsGetCurrentContext();
     CGContextSetFillColorWithColor(cgContext, [color CGColor]);
+    CGContextSetAlpha(cgContext, 0.5f);
     CGContextMoveToPoint(cgContext, centerX, centerY);
     CGContextAddArc(cgContext, centerX, centerY, radius, (CGFloat) -M_PI_2, (CGFloat) (-M_PI_2 + M_PI * 2 * 100), 0);
     CGContextClosePath(cgContext);

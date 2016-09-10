@@ -13,7 +13,7 @@
 		F10FB9811D3F9A4900EA72A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F10FB97F1D3F9A4900EA72A1 /* Main.storyboard */; };
 		F10FB9831D3F9A4900EA72A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F10FB9821D3F9A4900EA72A1 /* Assets.xcassets */; };
 		F10FB9861D3F9A4900EA72A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F10FB9841D3F9A4900EA72A1 /* LaunchScreen.storyboard */; };
-		F10FB98F1D3F9AA800EA72A1 /* CPProgressTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = F10FB98E1D3F9AA800EA72A1 /* CPProgressTimer.m */; };
+		F12229CB1D841ED100C77DFA /* HKProgressTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = F12229CA1D841ED100C77DFA /* HKProgressTimer.m */; };
 		F1D26CE91D3FA87000836C00 /* NSTimer+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = F1D26CE81D3FA87000836C00 /* NSTimer+Extension.m */; };
 /* End PBXBuildFile section */
 
@@ -28,8 +28,8 @@
 		F10FB9821D3F9A4900EA72A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F10FB9851D3F9A4900EA72A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F10FB9871D3F9A4900EA72A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F10FB98D1D3F9AA800EA72A1 /* CPProgressTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPProgressTimer.h; sourceTree = "<group>"; };
-		F10FB98E1D3F9AA800EA72A1 /* CPProgressTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPProgressTimer.m; sourceTree = "<group>"; };
+		F12229C91D841ED100C77DFA /* HKProgressTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKProgressTimer.h; sourceTree = "<group>"; };
+		F12229CA1D841ED100C77DFA /* HKProgressTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKProgressTimer.m; sourceTree = "<group>"; };
 		F1D26CE71D3FA87000836C00 /* NSTimer+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Extension.h"; sourceTree = "<group>"; };
 		F1D26CE81D3FA87000836C00 /* NSTimer+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Extension.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -68,8 +68,8 @@
 				F10FB97A1D3F9A4900EA72A1 /* AppDelegate.m */,
 				F10FB97C1D3F9A4900EA72A1 /* ViewController.h */,
 				F10FB97D1D3F9A4900EA72A1 /* ViewController.m */,
-				F10FB98D1D3F9AA800EA72A1 /* CPProgressTimer.h */,
-				F10FB98E1D3F9AA800EA72A1 /* CPProgressTimer.m */,
+				F12229C91D841ED100C77DFA /* HKProgressTimer.h */,
+				F12229CA1D841ED100C77DFA /* HKProgressTimer.m */,
 				F1D26CE71D3FA87000836C00 /* NSTimer+Extension.h */,
 				F1D26CE81D3FA87000836C00 /* NSTimer+Extension.m */,
 				F10FB97F1D3F9A4900EA72A1 /* Main.storyboard */,
@@ -160,8 +160,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F10FB97E1D3F9A4900EA72A1 /* ViewController.m in Sources */,
-				F10FB98F1D3F9AA800EA72A1 /* CPProgressTimer.m in Sources */,
 				F10FB97B1D3F9A4900EA72A1 /* AppDelegate.m in Sources */,
+				F12229CB1D841ED100C77DFA /* HKProgressTimer.m in Sources */,
 				F1D26CE91D3FA87000836C00 /* NSTimer+Extension.m in Sources */,
 				F10FB9781D3F9A4900EA72A1 /* main.m in Sources */,
 			);

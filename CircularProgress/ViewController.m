@@ -20,15 +20,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+   
     
     self.hTimer.progressColor = [UIColor whiteColor];
     self.hTimer.progressBorderColor = [UIColor redColor];
-    self.hTimer.progressBorderColor = [UIColor orangeColor];
+    self.hTimer.progressCircleColor = [UIColor yellowColor];
     self.hTimer.delegate = self;
+    [self.hTimer setProgressDirection:ProgressDirectionUnFillClockwise];
+     
     
-    
-    NSArray *ary  = [NSArray arrayWithObjects:@"1",@"2",@"3",@"4",@"5", nil];
-    int index = 6;
+//    NSArray *ary  = [NSArray arrayWithObjects:@"1",@"2",@"3",@"4",@"5", nil];
+//    int index = 6;
 //    assert(index>0 && ary.count>index);
 //    NSAssert(index>0 && ary.count>index, @"array index = %i and array count = %lu", index,(unsigned long)ary.count);
 //    NSLog(@"print = %@",ary[index]);
@@ -55,15 +57,15 @@
 
 
 #pragma mark - CPProgreddTimer Delegates
-- (void)didStopProgressTimer:(CPProgressTimer *)progressTimer percentage:(CGFloat)percentage {
+- (void)didStopProgressTimer:(HKProgressTimer *)progressTimer percentage:(CGFloat)percentage {
 //    NSLog(@"didStopProgressTimer - Percentage = %f",percentage);
 }
 
-- (void)didUpdateProgressTimer:(CPProgressTimer *)progressTimer percentage:(CGFloat)percentage {
+- (void)didUpdateProgressTimer:(HKProgressTimer *)progressTimer percentage:(CGFloat)percentage {
 //    NSLog(@"didUpdateProgressTimer - Percentage = %f",percentage);
 }
 
-- (void)willUpdateProgressTimer:(CPProgressTimer *)progressTimer percentage:(CGFloat)percentage {
+- (void)willUpdateProgressTimer:(HKProgressTimer *)progressTimer percentage:(CGFloat)percentage {
 //    NSLog(@"willUpdateProgressTimer - Percentage = %f",percentage);
 }
 
