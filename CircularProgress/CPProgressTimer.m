@@ -171,7 +171,21 @@
     CGContextRef cgContext = UIGraphicsGetCurrentContext();
     CGContextSetFillColorWithColor(cgContext, [color CGColor]);
     CGContextMoveToPoint(cgContext, centerX, centerY);
-    CGContextAddArc(cgContext, centerX, centerY, radius, (CGFloat) (-M_PI_2 + M_PI * 2 * (percentage)), (CGFloat) (-M_PI_2 + M_PI * 2 * (1)), 0);
+    
+    // fill clock wise
+//    CGContextAddArc(cgContext, centerX, centerY, radius, (CGFloat) -M_PI_2, (CGFloat) (-M_PI_2 + M_PI * 2 * (percentage)), 0);
+    
+    // unfill clockwise
+//    CGContextAddArc(cgContext, centerX, centerY, radius, (CGFloat) (-M_PI_2 + M_PI * 2 * (percentage)), (CGFloat) (-M_PI_2 + M_PI * 2 * (1)), 0);
+    
+    //unfill anticlockwise
+//    CGContextAddArc(cgContext, centerX, centerY, radius, (CGFloat) -M_PI_2, (CGFloat) (-M_PI_2 + M_PI * (-2) * (percentage)), 0);
+
+
+    //fill anticlockwise
+    CGContextAddArc(cgContext, centerX, centerY, radius, (CGFloat) (-M_PI_2 + M_PI * (-2) * (percentage)), (CGFloat) (-M_PI_2 + M_PI * (-2) * (1)), 0);
+
+    
     CGContextClosePath(cgContext);
     CGContextFillPath(cgContext);
 }
@@ -185,9 +199,23 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(context, 10);
     CGContextSetStrokeColorWithColor(context, [color CGColor]);
+
+    // fill clockwise
+//    CGContextAddArc(context, centerX, centerY, radius, (CGFloat) -M_PI_2, (CGFloat) (-M_PI_2 + M_PI * 2 * (percentage)), 0);
     
-    //    CGContextAddArc(context, centerX, centerY, radius, (CGFloat) -M_PI_2, (CGFloat) (-M_PI_2 + M_PI * 2 * (percentage)), 0);
-    CGContextAddArc(context, centerX, centerY, radius, (CGFloat) (-M_PI_2 + M_PI * 2 * (percentage)), (CGFloat) (-M_PI_2 + M_PI * 2 * (1)), 0);
+    // unfill clockwise
+//    CGContextAddArc(context, centerX, centerY, radius, (CGFloat) (-M_PI_2 + M_PI * 2 * (percentage)), (CGFloat) (-M_PI_2 + M_PI * 2 * (1)), 0);
+    
+    
+    //unfill anticlockwise
+//    CGContextAddArc(context, centerX, centerY, radius, (CGFloat) -M_PI_2, (CGFloat) (-M_PI_2 + M_PI * (-2) * (percentage)), 0);
+
+    
+    CGContextAddArc(context, centerX, centerY, radius, (CGFloat) (-M_PI_2 + M_PI * (-2) * (percentage)), (CGFloat) (-M_PI_2 + M_PI * (-2) * (1)), 0);
+
+    
+
+    
     CGContextStrokePath(context);
 }
 

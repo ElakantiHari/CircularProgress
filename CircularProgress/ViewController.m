@@ -26,6 +26,13 @@
     self.hTimer.progressBorderColor = [UIColor orangeColor];
     self.hTimer.delegate = self;
     
+    
+    NSArray *ary  = [NSArray arrayWithObjects:@"1",@"2",@"3",@"4",@"5", nil];
+    int index = 6;
+//    assert(index>0 && ary.count>index);
+//    NSAssert(index>0 && ary.count>index, @"array index = %i and array count = %lu", index,(unsigned long)ary.count);
+//    NSLog(@"print = %@",ary[index]);
+    
 }
 - (IBAction)startAction:(id)sender {
     
